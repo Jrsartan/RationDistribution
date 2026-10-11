@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add User - RationSetu</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="navbar-left">
+        <button class="hamburger">☰</button>
+        <span class="nav-home-text">Home</span>
+    </div>
+    <a href="{{ url_for('index') }}" class="navbar-brand">
+        <span class="logo-icon">🌾</span>
+        <span class="brand-name">RationSetu</span>
+    </a>
+    <div class="navbar-right">
+        <span class="login-as-text">Login as Admin</span>
+        <span class="user-icon">👤</span>
+        <a href="{{ url_for('logout') }}">
+            <button class="logout-btn">Logout</button>
+        </a>
+    </div>
+</nav>
+
+<div class="admin-layout">
+    <div class="sidebar">
+        <img src="{{ url_for('static', filename='img/pic1.jpg') }}"
+             alt="" class="sidebar-img">
+        <div class="sidebar-menu">
+            <a href="{{ url_for('change_password') }}" class="sidebar-link">🔒 Change Password</a>
+            <a href="{{ url_for('dashboard') }}" class="sidebar-link">🏠 Home</a>
+            <a href="{{ url_for('manage_users') }}" class="sidebar-link">👥 Manage Users</a>
+            <a href="{{ url_for('ration_distribution') }}" class="sidebar-link">🌾 Distribution</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="page-header">
+            <span>➤</span>
+            <h2 class="page-title">Add New User</h2>
+        </div>
+
+        <div class="add-user-form">
+            <form method="POST" action="{{ url_for('add_user') }}">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Aadhar Number</label>
+                        <input type="text" name="aadhar"
+                               class="form-control" required
+                               placeholder="Enter Aadhar No.">
+                    </div>
+                    <div class="form-group">
+                        <label>Family Members Count</label>
+                        <input type="number" name="family_members"
+                               class="form-control" required
+                               placeholder="No. of members">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Head of Family</label>
+                    <input type="text" name="head_of_family"
+                           class="form-control" required
+                           placeholder="Head of family name">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Family Member 2</label>
+                        <input type="text" name="member2"
+                               class="form-control"
+                               placeholder="Member 2 name">
+                    </div>
+                    <div class="form-group">
+                        <label>Family Member 3</label>
+                        <input type="text" name="member3"
+                               class="form-control"
+                               placeholder="Member 3 name">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Bank Account No</label>
+                        <input type="text" name="bank_ac"
+                               class="form-control"
+                               placeholder="Bank A/C No.">
+                    </div>
+                    <div class="form-group">
+                        <label>Mobile Number</label>
+                        <input type="text" name="mobile"
+                               class="form-control"
+                               placeholder="Mobile No.">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" name="address"
+                           class="form-control"
+                           placeholder="Full Address">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>District</label>
+                        <input type="text" name="district"
+                               class="form-control"
+                               placeholder="District">
+                    </div>
+                    <div class="form-group">
+                        <label>State</label>
+                        <input type="text" name="state"
+                               class="form-control"
+                               placeholder="State">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Fingerprint ID (from ESP32)</label>
+                    <input type="text" name="finger_id"
+                           class="form-control"
+                           placeholder="Fingerprint ID (auto/manual)"
+                           id="fingerIdInput">
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    💾 Save User
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment - RationSetu</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="navbar-left">
+        <button class="hamburger">☰</button>
+        <span class="nav-home-text">Home</span>
+    </div>
+    <a href="{{ url_for('index') }}" class="navbar-brand">
+        <span class="logo-icon">🌾</span>
+        <span class="brand-name">RationSetu</span>
+    </a>
+    <div class="navbar-right">
+        <span class="login-as-text">Login as Admin</span>
+        <span class="user-icon">👤</span>
+        <a href="{{ url_for('logout') }}">
+            <button class="logout-btn">Logout</button>
+        </a>
+    </div>
+</nav>
+
+<div class="admin-layout">
+    <div class="sidebar">
+        <img src="{{ url_for('static', filename='img/pic1.jpg') }}"
+             alt="" class="sidebar-img">
+        <div class="sidebar-menu">
+            <a href="{{ url_for('change_password') }}" class="sidebar-link">🔒 Change Password</a>
+            <a href="{{ url_for('dashboard') }}" class="sidebar-link">🏠 Home</a>
+            <a href="{{ url_for('manage_users') }}" class="sidebar-link">👥 Manage Users</a>
+            <a href="{{ url_for('ration_distribution') }}" class="sidebar-link active">🌾 Distribution</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="page-header"><span>➤</span></div>
+
+        <div style="background:white; border-radius:12px; padding:20px;">
+            <h3 class="page-title" style="margin-bottom:15px;">All Details</h3>
+
+            <table class="ration-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Sno.</th>
+                        <th>Commondities</th>
+                        <th>Eligibility of Ration</th>
+                        <th>QTY.</th>
+                        <th>Rate</th>
+                        <th>Remaining QTY</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="radio" class="radio-check" checked></td>
+                        <td>1</td>
+                        <td><strong>{{ commodity.name }}</strong></td>
+                        <td>{{ commodity.eligibility_qty }}</td>
+                        <td>{{ qty }}</td>
+                        <td>{{ commodity.rate }}</td>
+                        <td>{{ remaining }}</td>
+                        <td>
+                            <button class="table-submit-btn">Submit</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- PAYMENT SECTION -->
+            <div class="payment-section">
+                <p class="payment-title">Payment Gateway</p>
+                <p class="payment-info">
+                    Total Amount To Be Paid In Rs: {{ total_amount }}
+                </p>
+                <p class="payment-info">
+                    Place The Sack For {{ commodity.name }} To Be Dispensed
+                </p>
+
+                <div id="weightDisplay"
+                     style="margin-top:15px; font-family:'Bangers',cursive;
+                            font-size:18px; color:#333;">
+                    Weight on Load Cell: <span id="weightVal">0.00</span> kg
+                </div>
+
+                <a href="{{ url_for('ration_distribution') }}">
+                    <button class="submit-btn" style="margin-top:20px; max-width:300px;">
+                        ✅ Done - Back to Distribution
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Poll weight from ESP32 every 2 seconds
+function getWeight() {
+    fetch('/api/get_weight')
+    .then(r => r.json())
+    .then(data => {
+        document.getElementById('weightVal').textContent = data.weight;
+    });
+}
+
+setInterval(getWeight, 2000);
+getWeight();
+</script>
+
+</body>
+</html>

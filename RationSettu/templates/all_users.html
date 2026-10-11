@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - RationSetu</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="navbar-left">
+        <button class="hamburger">☰</button>
+        <span class="nav-home-text">Home</span>
+    </div>
+    <a href="{{ url_for('index') }}" class="navbar-brand">
+        <span class="logo-icon">🌾</span>
+        <span class="brand-name">RationSetu</span>
+    </a>
+    <div class="navbar-right">
+        <span class="login-as-text">Login as Admin</span>
+        <span class="user-icon">👤</span>
+        <a href="{{ url_for('logout') }}">
+            <button class="logout-btn">Logout</button>
+        </a>
+    </div>
+</nav>
+
+<div class="admin-layout">
+    <div class="sidebar">
+        <img src="{{ url_for('static', filename='img/pic1.jpg') }}"
+             alt="" class="sidebar-img">
+        <div class="sidebar-menu">
+            <a href="{{ url_for('change_password') }}" class="sidebar-link">🔒 Change Password</a>
+            <a href="{{ url_for('dashboard') }}" class="sidebar-link active">🏠 Home</a>
+            <a href="{{ url_for('manage_users') }}" class="sidebar-link">👥 Manage Users</a>
+            <a href="{{ url_for('ration_distribution') }}" class="sidebar-link">🌾 Distribution</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="page-header">
+            <span>➤</span>
+            <h2 class="page-title">Dashboard</h2>
+        </div>
+
+        <div class="table-container">
+            <p class="sub-header">➤ All User Details</p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Sno.</th>
+                        <th>Adhar No</th>
+                        <th>Family Member</th>
+                        <th>Head of Family</th>
+                        <th>Family Member 2</th>
+                        <th>Family Member 3</th>
+                        <th>Bank A/C No</th>
+                        <th>Mobile No</th>
+                        <th>Address</th>
+                        <th>District</th>
+                        <th>State</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ user.aadhar_no }}</td>
+                        <td>{{ user.family_members }}</td>
+                        <td>{{ user.head_of_family }}</td>
+                        <td>{{ user.member2 }}</td>
+                        <td>{{ user.member3 }}</td>
+                        <td>{{ user.bank_ac }}</td>
+                        <td>{{ user.mobile }}</td>
+                        <td>{{ user.address }}</td>
+                        <td>{{ user.district }}</td>
+                        <td>{{ user.state }}</td>
+                       <td>
+                            <button class="table-submit-btn"
+                               onclick="window.location.href='{{ url_for('ration_distribution') }}'">
+                           Submit
+                        </button>
+</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="12"
+                            style="text-align:center; padding:20px; color:#555;">
+                            No users added yet. 
+                            <a href="{{ url_for('manage_users') }}">Add Users</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

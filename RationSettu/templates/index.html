@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RationSetu - Smart Ration Distribution</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <a href="{{ url_for('index') }}" class="navbar-brand">
+        <span class="logo-icon">🌾</span>
+        <span class="brand-name">RationSetu</span>
+    </a>
+    <div class="navbar-right">
+        <span class="user-icon">👤</span>
+    </div>
+</nav>
+
+<!-- LANDING CONTENT -->
+<div class="landing-container">
+    <img src="{{ url_for('static', filename='img/pic1.jpg') }}"
+         alt="Ration Hands" class="hero-image">
+
+    <p class="welcome-title">
+        WELCOME TO SMART AUTOMATIC RATIONING<br>
+        FOR PUBLIC DISTRIBUTION SYSTEM
+    </p>
+
+    <p class="welcome-quote">
+        "EVERY MAN, WOMAN AND CHILD HAS THE INALIENABLE RIGHT
+        TO BE FREE FROM HUNGER AND MALNUTRITION"
+    </p>
+
+    <a href="{{ url_for('login') }}" class="login-link">
+        Login
+    </a>
+</div>
+
+</body>
+</html>

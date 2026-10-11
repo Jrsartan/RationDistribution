@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Users - RationSetu</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="navbar-left">
+        <button class="hamburger">☰</button>
+        <span class="nav-home-text">Home</span>
+    </div>
+    <a href="{{ url_for('index') }}" class="navbar-brand">
+        <span class="logo-icon">🌾</span>
+        <span class="brand-name">RationSetu</span>
+    </a>
+    <div class="navbar-right">
+        <span class="login-as-text">Login as Admin</span>
+        <span class="user-icon">👤</span>
+        <a href="{{ url_for('logout') }}">
+            <button class="logout-btn">Logout</button>
+        </a>
+    </div>
+</nav>
+
+<div class="admin-layout">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <img src="{{ url_for('static', filename='img/pic1.jpg') }}"
+             alt="Profile" class="sidebar-img">
+        <div class="sidebar-menu">
+            <a href="{{ url_for('change_password') }}" class="sidebar-link">
+                🔒 Change Password
+            </a>
+            <a href="{{ url_for('dashboard') }}" class="sidebar-link">
+                🏠 Home
+            </a>
+            <a href="{{ url_for('manage_users') }}" class="sidebar-link active">
+                👥 Add User
+            </a>
+            <a href="{{ url_for('ration_distribution') }}" class="sidebar-link">
+                🌾 Distribution
+            </a>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="page-header">
+            <span>➤</span>
+            <h2 class="page-title">Manage Users</h2>
+        </div>
+
+        <div class="manage-card">
+            <p class="manage-card-title">➤ Welcome To Ration</p>
+
+            <!-- Fingerprint Status -->
+            <div id="fingerStatus" class="finger-status"></div>
+
+            <button class="scan-btn" onclick="scanFingerprint()">
+                🖐 Scan Fingerprint
+            </button>
+
+            <br><br>
+
+            <!-- After fingerprint verified, show form link -->
+            <div id="addUserSection" style="display:none;">
+                <p style="font-weight:600; color:green; margin-bottom:10px;">
+                    ✅ Fingerprint Verified! You can now add a user.
+                </p>
+                <a href="{{ url_for('add_user') }}">
+                    <button class="scan-btn">➕ Add New User</button>
+                </a>
+            </div>
+
+            <form id="submitForm">
+                <button type="button" class="scan-btn"
+                        style="background:#4CAF50; margin-top:20px;"
+                        onclick="checkAndSubmit()">
+                    Submit
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+let fingerprintVerified = false;
+
+function scanFingerprint() {
+    const statusDiv = document.getElementById('fingerStatus');
+    statusDiv.className = 'finger-status scanning';
+    statusDiv.textContent = '🔄 Scanning fingerprint... Please place your finger.';
+
+    fetch('/api/scan_fingerprint', {method: 'POST'})
+    .then(r => r.json())
+    .then(data => {
+        pollFingerprint();
+    });
+}
+
+function pollFingerprint() {
+    let attempts = 0;
+    const interval = setInterval(() => {
+        fetch('/api/fingerprint_status')
+        .then(r => r.json())
+        .then(data => {
+            if (data.verified) {
+                clearInterval(interval);
+                const statusDiv = document.getElementById('fingerStatus');
+                statusDiv.className = 'finger-status success';
+                statusDiv.textContent = '✅ Fingerprint Verified! ID: ' + data.id;
+                fingerprintVerified = true;
+                document.getElementById('addUserSection').style.display = 'block';
+            }
+            attempts++;
+            if (attempts > 30) {
+                clearInterval(interval);
+                const statusDiv = document.getElementById('fingerStatus');
+                statusDiv.className = 'finger-status error';
+                statusDiv.textContent = '❌ Fingerprint not recognized. Try again.';
+            }
+        });
+    }, 1000);
+}
+
+function checkAndSubmit() {
+    if (!fingerprintVerified) {
+        alert('Please scan fingerprint first!');
+        return;
+    }
+    window.location.href = '/add_user';
+}
+</script>
+
+</body>
+</html>

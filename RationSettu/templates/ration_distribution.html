@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ration Distribution - RationSetu</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="navbar-left">
+        <button class="hamburger">☰</button>
+        <span class="nav-home-text">Home</span>
+    </div>
+
+    <a href="{{ url_for('index') }}" class="navbar-brand">
+        <span class="logo-icon">🌾</span>
+        <span class="brand-name">RationSetu</span>
+    </a>
+
+    <div class="navbar-right">
+        <span class="login-as-text">Login as Admin</span>
+        <span class="user-icon">👤</span>
+
+        <a href="{{ url_for('logout') }}">
+            <button class="logout-btn">Logout</button>
+        </a>
+    </div>
+
+</nav>
+
+<div class="admin-layout">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+        <img src="{{ url_for('static',
+             filename='img/pic1.jpg') }}"
+             class="sidebar-img">
+
+        <div class="sidebar-menu">
+
+            <a href="{{ url_for('change_password') }}"
+               class="sidebar-link">
+               🔒 Change Password
+            </a>
+
+            <a href="{{ url_for('dashboard') }}"
+               class="sidebar-link">
+               🏠 Home
+            </a>
+
+            <a href="{{ url_for('manage_users') }}"
+               class="sidebar-link">
+               👥 Manage Users
+            </a>
+
+            <a href="{{ url_for('ration_distribution') }}"
+               class="sidebar-link active">
+               🌾 Distribution
+            </a>
+
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <div class="page-header">
+            <span>➤</span>
+        </div>
+
+        <div class="table-container">
+
+            <h3 class="page-title">
+                Ration Distribution
+            </h3>
+
+            <table class="ration-table">
+
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Sno.</th>
+                        <th>Commodity</th>
+                        <th>Eligibility</th>
+                        <th>Quantity</th>
+                        <th>Rate</th>
+                        <th>Remaining Qty</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <!-- WHEAT -->
+                    <tr>
+
+                        <td>
+                            <input type="radio"
+                                   name="selected_commodity"
+                                   onchange="selectCommodity(1)">
+                        </td>
+
+                        <td>1</td>
+
+                        <td><strong>Wheat</strong></td>
+
+                        <td>5 KG</td>
+
+                        <td>
+                            <input type="number"
+                                   id="qty_1"
+                                   class="qty-input"
+                                   min="1"
+                                   placeholder="Enter Qty">
+                        </td>
+
+                        <td>₹2/KG</td>
+
+                        <td>500 KG</td>
+
+                        <td>
+
+                            <form method="POST"
+                                  action="{{ url_for('process_ration') }}"
+                                  id="form_1">
+
+                                <input type="hidden"
+                                       name="commodity_name"
+                                       value="Wheat">
+
+                                <input type="hidden"
+                                       name="qty"
+                                       id="hidden_qty_1">
+
+                                <button type="button"
+                                        class="table-submit-btn"
+                                        onclick="submitRation(1)">
+
+                                    Submit
+
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                    <!-- RICE -->
+                    <tr>
+
+                        <td>
+                            <input type="radio"
+                                   name="selected_commodity"
+                                   onchange="selectCommodity(2)">
+                        </td>
+
+                        <td>2</td>
+
+                        <td><strong>Rice</strong></td>
+
+                        <td>5 KG</td>
+
+                        <td>
+                            <input type="number"
+                                   id="qty_2"
+                                   class="qty-input"
+                                   min="1"
+                                   placeholder="Enter Qty">
+                        </td>
+
+                        <td>₹3/KG</td>
+
+                        <td>400 KG</td>
+
+                        <td>
+
+                            <form method="POST"
+                                  action="{{ url_for('process_ration') }}"
+                                  id="form_2">
+
+                                <input type="hidden"
+                                       name="commodity_name"
+                                       value="Rice">
+
+                                <input type="hidden"
+                                       name="qty"
+                                       id="hidden_qty_2">
+
+                                <button type="button"
+                                        class="table-submit-btn"
+                                        onclick="submitRation(2)">
+
+                                    Submit
+
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                    <!-- SUGAR -->
+                    <tr>
+
+                        <td>
+                            <input type="radio"
+                                   name="selected_commodity"
+                                   onchange="selectCommodity(3)">
+                        </td>
+
+                        <td>3</td>
+
+                        <td><strong>Sugar</strong></td>
+
+                        <td>2 KG</td>
+
+                        <td>
+                            <input type="number"
+                                   id="qty_3"
+                                   class="qty-input"
+                                   min="1"
+                                   placeholder="Enter Qty">
+                        </td>
+
+                        <td>₹20/KG</td>
+
+                        <td>200 KG</td>
+
+                        <td>
+
+                            <form method="POST"
+                                  action="{{ url_for('process_ration') }}"
+                                  id="form_3">
+
+                                <input type="hidden"
+                                       name="commodity_name"
+                                       value="Sugar">
+
+                                <input type="hidden"
+                                       name="qty"
+                                       id="hidden_qty_3">
+
+                                <button type="button"
+                                        class="table-submit-btn"
+                                        onclick="submitRation(3)">
+
+                                    Submit
+
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                    <!-- DAL -->
+                    <tr>
+
+                        <td>
+                            <input type="radio"
+                                   name="selected_commodity"
+                                   onchange="selectCommodity(4)">
+                        </td>
+
+                        <td>4</td>
+
+                        <td><strong>Dal</strong></td>
+
+                        <td>3 KG</td>
+
+                        <td>
+                            <input type="number"
+                                   id="qty_4"
+                                   class="qty-input"
+                                   min="1"
+                                   placeholder="Enter Qty">
+                        </td>
+
+                        <td>₹40/KG</td>
+
+                        <td>300 KG</td>
+
+                        <td>
+
+                            <form method="POST"
+                                  action="{{ url_for('process_ration') }}"
+                                  id="form_4">
+
+                                <input type="hidden"
+                                       name="commodity_name"
+                                       value="Dal">
+
+                                <input type="hidden"
+                                       name="qty"
+                                       id="hidden_qty_4">
+
+                                <button type="button"
+                                        class="table-submit-btn"
+                                        onclick="submitRation(4)">
+
+                                    Submit
+
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function submitRation(id)
+{
+    const qty =
+        document.getElementById('qty_' + id).value;
+
+    if (!qty || qty <= 0)
+    {
+        alert('Please enter valid quantity!');
+        return;
+    }
+
+    document.getElementById(
+        'hidden_qty_' + id
+    ).value = qty;
+
+    document.getElementById(
+        'form_' + id
+    ).submit();
+}
+
+function selectCommodity(id)
+{
+    document.querySelectorAll('.qty-input')
+        .forEach(input => {
+            input.style.background = '';
+        });
+
+    const input =
+        document.getElementById('qty_' + id);
+
+    input.style.background = '#e8f5e9';
+
+    input.focus();
+}
+
+</script>
+
+</body>
+</html>

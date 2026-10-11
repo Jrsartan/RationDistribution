@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - RationSetu</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <a href="{{ url_for('index') }}" class="navbar-brand">
+        <span class="logo-icon">🌾</span>
+        <span class="brand-name">RationSetu</span>
+    </a>
+    <div class="navbar-right">
+        <span class="user-icon">👤</span>
+    </div>
+</nav>
+
+<div class="login-container">
+    <!-- QUOTE CARDS -->
+    <div class="login-cards-row">
+        <div class="card-img">
+            <img src="{{ url_for('static', filename='img/loginphoto.webp') }}"
+                 alt="Ration">
+        </div>
+        <div class="quote-card">
+            <p class="quote-text">
+                "FOOD IS A WEAPON DON'T WASTE IT - BUY WISELY
+                - COOK CAREFULLY - EAT IT ALL"
+            </p>
+        </div>
+        <div class="quote-card-dark">
+            <p class="quote-text-white">
+                "FOOD IS AS ESSENTIAL FOR LIVING
+                AS AIR IS FOR BREATHING"
+            </p>
+        </div>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <h2 class="login-title">Login Now</h2>
+
+    {% if error %}
+        <div class="error-msg">❌ {{ error }}</div>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('login') }}" class="login-form">
+        <input type="text" name="user_id"
+               placeholder="Enter user ID...."
+               class="form-input" required>
+
+        <input type="password" name="password"
+               placeholder="Enter Password...."
+               class="form-input" required>
+
+        <button type="submit" class="submit-btn">Submit</button>
+    </form>
+</div>
+
+</body>
+</html>
